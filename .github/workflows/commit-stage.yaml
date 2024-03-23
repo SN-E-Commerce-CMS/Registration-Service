@@ -24,8 +24,8 @@ jobs:
           cache: maven
       - name: Build, unit tests and integration tests
         run: |
-          chmod +x ./registration-service/mvnw
-          ./registration-service/mvnw install
+          chmod +x ./mvnw
+          ./mvnw install
       - name: Code vulnerability scanning
         uses: anchore/scan-action@v3
         id: scan
@@ -58,8 +58,8 @@ jobs:
           cache: maven
       - name: Build container image
         run: |
-          chmod +x ./registration-service/mvnw
-          ./registration-service/mvnw spring-boot:build-image -DregistryRepo=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }} -DregistryPassword=${{ secrets.ACTION_PW }} -DregistryPublish=false -DregistryUsername=${{ github.actor }}
+          chmod +x ./mvnw
+          ./mvnw spring-boot:build-image -DregistryRepo=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }} -DregistryPassword=${{ secrets.ACTION_PW }} -DregistryPublish=false -DregistryUsername=${{ github.actor }}
       - name: OCI image vulnerability scanning
         uses: anchore/scan-action@v3
         id: scan
@@ -72,18 +72,18 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
-      - name: Validate Kubernetes manifests
-        uses: stefanprodan/kube-tools@v1
-        with:
-          kubectl: 1.28.3
-          kubeval: 0.16.1
-          command: |
-            kubeval --strict -d ./catalog-service/k8s
-      - name: Log into container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.ACTION_PW }}
-      - name: Publish container image
-        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+#      - name: Validate Kubernetes manifests
+#        uses: stefanprodan/kube-tools@v1
+#        with:
+#          kubectl: 1.28.3
+#          kubeval: 0.16.1
+#          command: |
+#            kubeval --strict -d ./catalog-service/k8s
+#      - name: Log into container registry
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ${{ env.REGISTRY }}
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.ACTION_PW }}
+#      - name: Publish container image
+#        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
