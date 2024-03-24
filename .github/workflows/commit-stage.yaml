@@ -4,7 +4,7 @@ on: push
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: sn-e-commerce-cms/registration-service
-  VERSION: {{ github.sha }}
+  VERSION: LATEST
 jobs:
   build:
     name: Build and Test
