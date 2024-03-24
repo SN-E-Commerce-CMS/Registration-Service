@@ -3,9 +3,8 @@ on: push
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: savan222/registration-service
+  IMAGE_NAME: sn-e-commerce-cms/registration-service
   VERSION: latest
-
 jobs:
   build:
     name: Build and Test
@@ -85,5 +84,5 @@ jobs:
 #          registry: ${{ env.REGISTRY }}
 #          username: ${{ github.actor }}
 #          password: ${{ secrets.ACTION_PW }}
-#      - name: Publish container image
-#        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+      - name: Publish container image
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}

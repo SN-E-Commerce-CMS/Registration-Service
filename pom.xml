@@ -13,10 +13,15 @@
 	<groupId>org.savan.cms</groupId>
 	<artifactId>registration-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Registration-Service</name>
+	<name>registration-service</name>
 	<description>Registration-Service</description>
+
 	<properties>
 		<java.version>21</java.version>
+		<docker.image.name>${project.name}</docker.image.name>
+		<registry.url>ghcr.io</registry.url>
+		<registry.username>sn-e-commerce-cms</registry.username>
+		<registry.password>secret</registry.password>
 	</properties>
 
 	<dependencies>
@@ -80,19 +85,22 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<image>
-						<name>${registryRepo}</name>
-						<publish>${registryPublish}</publish>
-					</image>
-					<docker>
-						<publishRegistry>
-							<username>${registryUsername}</username>
-							<password>${registryPassword}</password>
-							<url>ghcr.io</url>
-						</publishRegistry>
-					</docker>
-				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-image</goal>
+						</goals>
+						<configuration>
+							<imageName>${registry.url}/${registry.username}/${docker.image.name}:${project.version}</imageName>
+							<image>
+								<name>${registry.url}/${registry.username}/${docker.image.name}:${project.version}</name>
+								<env>
+									<BP_JVM_VERSION>21</BP_JVM_VERSION>
+								</env>
+							</image>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
