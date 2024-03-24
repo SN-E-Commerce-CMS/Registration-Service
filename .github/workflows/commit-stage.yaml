@@ -4,7 +4,7 @@ on: push
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: sn-e-commerce-cms/registration-service
-  VERSION: latest
+  VERSION: {{ github.sha }}
 jobs:
   build:
     name: Build and Test
@@ -58,7 +58,7 @@ jobs:
       - name: Build container image
         run: |
           chmod +x ./mvnw
-          ./mvnw spring-boot:build-image -DregistryRepo=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }} -DregistryPassword=${{ secrets.ACTION_PW }} -DregistryPublish=false -DregistryUsername=${{ github.actor }}
+          ./mvnw spring-boot:build-image -DregistryUrl=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }} -DregistryPassword=${{ secrets.ACTION_PW }} -DregistryPublish=true -DregistryUsername=${{ github.actor }}
 #      - name: OCI image vulnerability scanning
 #        uses: anchore/scan-action@v3
 #        id: scan
@@ -78,11 +78,16 @@ jobs:
 #          kubeval: 0.16.1
 #          command: |
 #            kubeval --strict -d ./catalog-service/k8s
-#      - name: Log into container registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ${{ env.REGISTRY }}
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.ACTION_PW }}
+      - name: Log into container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish container image
         run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+      - name: Publish container image (latest)
+        run: |
+          docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }} \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
