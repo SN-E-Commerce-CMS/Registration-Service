@@ -26,7 +26,7 @@ spring:
         registration:
           keycloak:
             client-id: registration-service
-            client-secret: ???
+            client-secret: WIUjWuVtk2I0CPgQS5552AB9LrghIUhG
             scope: openid,roles
             authorization-grant-type: client_credentials
         provider:
