@@ -85,20 +85,20 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<imageName>${registry.url}/${registry.username}/${docker.image.name}:${project.version}</imageName>
+					<image>
+						<name>${registry.url}/${registry.username}/${docker.image.name}:${project.version}</name>
+						<env>
+							<BP_JVM_VERSION>21</BP_JVM_VERSION>
+						</env>
+					</image>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
 							<goal>build-image</goal>
 						</goals>
-						<configuration>
-							<imageName>${registry.url}/${registry.username}/${docker.image.name}:${project.version}</imageName>
-							<image>
-								<name>${registry.url}/${registry.username}/${docker.image.name}:${project.version}</name>
-								<env>
-									<BP_JVM_VERSION>21</BP_JVM_VERSION>
-								</env>
-							</image>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
