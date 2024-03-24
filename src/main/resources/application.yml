@@ -9,24 +9,13 @@ spring:
     name: registration-service
   lifecycle:
     timeout-per-shutdown-phase: 15s
-  #  datasource:
-#    url:
-#    username:
-#    password:
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
   security:
     oauth2:
       client:
         registration:
           keycloak:
             client-id: registration-service
-            client-secret: WIUjWuVtk2I0CPgQS5552AB9LrghIUhG
+            client-secret: ???
             scope: openid,roles
             authorization-grant-type: client_credentials
         provider:
