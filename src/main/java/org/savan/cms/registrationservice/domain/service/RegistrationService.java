@@ -1,6 +1,5 @@
 package org.savan.cms.registrationservice.domain.service;
 
-import org.savan.cms.registrationservice.domain.repository.UserRepository;
 import org.savan.cms.registrationservice.dto.MerchantKeycloakUser;
 import org.savan.cms.registrationservice.dto.MerchantUser;
 import org.savan.cms.registrationservice.proxy.KeycloakRegistrationProxy;
@@ -16,16 +15,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegistrationService {
     private final Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
-    private final UserRepository userRepository;
     private final KeycloakRegistrationProxy keycloakRegistrationProxy;
 
-    public RegistrationService(UserRepository userRepository, KeycloakRegistrationProxy keycloakRegistrationProxy) {
-        this.userRepository = userRepository;
+    public RegistrationService(KeycloakRegistrationProxy keycloakRegistrationProxy) {
         this.keycloakRegistrationProxy = keycloakRegistrationProxy;
     }
 
     /**
      * Registers user in keycloak db and application db, also sends confirmation mail.
+     *
      * @param user {@link MerchantKeycloakUser}
      * @return {@link MerchantUser}
      */
