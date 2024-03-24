@@ -18,7 +18,7 @@
 
 	<properties>
 		<java.version>21</java.version>
-		<docker.image.name>${project.name}</docker.image.name>
+		<registry.image.name>${registry.url}/${registry.username}/${project.name}:${project.version}</registry.image.name>
 		<registry.url>ghcr.io</registry.url>
 		<registry.username>sn-e-commerce-cms</registry.username>
 		<registry.password>secret</registry.password>
@@ -87,7 +87,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>${registry.url}/${registry.username}/${docker.image.name}:${project.version}</name>
+						<name>${registry.image.name}</name>
 						<env>
 							<BP_JVM_VERSION>21</BP_JVM_VERSION>
 						</env>
