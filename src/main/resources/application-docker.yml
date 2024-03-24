@@ -1,9 +1,10 @@
-security:
-  oauth2:
-    client:
-      provider:
-        keycloak:
-          issuer-uri: http://keycloak/realms/cms
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://keycloak/realms/cms
 
 keycloak:
   admin.baseUrl: http://keycloak/admin/realms/cms/users
