@@ -2,7 +2,6 @@ package org.savan.cms.registrationservice.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dasniko.testcontainers.keycloak.KeycloakContainer;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.savan.cms.registrationservice.dto.MerchantKeycloakUser;
@@ -34,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers(disabledWithoutDocker = true)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class RegistrationControllerTest {
+public class RegistrationControllerTestIT {
 
     // keycloak oauth client data
     private static final String CLIENT_ID = "registration-service";

@@ -28,14 +28,11 @@ public class RegistrationService {
      * @return {@link MerchantUser}
      */
     public MerchantUser registerMerchantUser(MerchantKeycloakUser user) {
-        // register user at keycloak
         MerchantUser merchantUser = keycloakRegistrationProxy.registerKeycloakUser(user);
 
         sendConfirmationMail(merchantUser);
 
-        // save user in db as inactive
-        // when user confirm and set 2FA enable it update
-        return null;
+        return merchantUser;
     }
 
     private void sendConfirmationMail(MerchantUser merchantUser) {
